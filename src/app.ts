@@ -51,12 +51,16 @@ class Component {
 class DOMHandler {
   public addMovieBtn: HTMLElement;
   public backdrop: HTMLElement;
-  public testBtn: HTMLElement;
+
   public addMovieModal: HTMLElement;
   constructor() {
-    this.addMovieBtn = document.getElementById("js-add-movie-btn");
-    this.backdrop = document.querySelector(".backdrop");
-    this.addMovieModal = document.querySelector(".add-movie-modal");
+    this.addMovieBtn = document.getElementById(
+      "js-add-movie-btn"
+    ) as HTMLInputElement;
+    this.backdrop = document.querySelector(".backdrop") as HTMLInputElement;
+    this.addMovieModal = document.querySelector(
+      ".add-movie-modal"
+    ) as HTMLInputElement;
     this.setupAddMovieBtn();
   }
 
