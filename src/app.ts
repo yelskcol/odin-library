@@ -16,9 +16,9 @@ class Library {
 
 class Film {
   constructor(
-    public title: string,
-    public releaseDate: string,
-    public director: string
+    private title: string,
+    private releaseDate: string,
+    private director: string
   ) {}
 
   printInfo() {
@@ -49,18 +49,18 @@ class Component {
 }
 
 class DOMHandler {
-  public addMovieBtn: HTMLElement;
-  public backdrop: HTMLElement;
+  private addMovieBtn: HTMLElement;
+  private backdrop: HTMLElement;
 
-  public addMovieModal: HTMLElement;
+  private addMovieModal: HTMLElement;
   constructor() {
     this.addMovieBtn = document.getElementById(
       "js-add-movie-btn"
     ) as HTMLInputElement;
-    this.backdrop = document.querySelector(".backdrop") as HTMLInputElement;
+    this.backdrop = document.querySelector(".backdrop") as HTMLElement;
     this.addMovieModal = document.querySelector(
       ".add-movie-modal"
-    ) as HTMLInputElement;
+    ) as HTMLElement;
     this.setupAddMovieBtn();
   }
 
@@ -94,7 +94,7 @@ class App {
       )
     );
 
-    console.log(library.list[0].printInfo());
+    console.log(library.list[0].title);
   }
 }
 
