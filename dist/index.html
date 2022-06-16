@@ -15,23 +15,23 @@
     </header>
     <main>
       <div class="add-movie-modal add-movie-modal--hidden">
-        <form>
-          <div>
+        <form class="add-movie-modal__form">
+          <div class="add-movie-modal__form__element">
             <label for="Title">Title</label>
             <input type="text" id="title" name="title" required />
           </div>
-          <div>
+          <div class="add-movie-modal__form__element">
             <label for="Director">Director</label>
             <input type="text" id="director" name="director" required />
           </div>
-          <div>
+          <div class="add-movie-modal__form__element">
             <label for="Year">Year</label>
             <input type="text" id="year" name="year" required />
           </div>
         </form>
         <div class="add-movie-modal__buttons">
-          <button class="btn">Add Movie</button>
-          <button class="btn">Cancel</button>
+          <button class="btn" id="add-movie-modal__add-btn">Add Movie</button>
+          <button class="btn" id="add-movie-modal__cancel-btn">Cancel</button>
         </div>
       </div>
       <div class="backdrop backdrop--hidden"></div>
