@@ -1,6 +1,7 @@
 class Library {
-  list;
-  constructor() {
+  private list;
+  private static instance;
+  private constructor() {
     this.list = [];
   }
 
@@ -12,6 +13,15 @@ class Library {
   addFilm(film: Film) {
     this.list.push(film);
     console.log(this.list);
+  }
+
+  static getInstance() {
+    if (Library.instance()) {
+      return this.instance;
+    }
+
+    this.instance = new Library();
+    return this.instance;
   }
 }
 
@@ -50,6 +60,7 @@ class Component {
 }
 
 class DisplayController {
+  private static instance;
   private addMovieBtn: HTMLButtonElement;
   private backdrop: HTMLElement;
   private addMovieModal: HTMLElement;
@@ -57,7 +68,7 @@ class DisplayController {
   private addMovieModalCancelBtn: HTMLButtonElement;
   private libraryReference: Library;
 
-  constructor(libraryData: Library) {
+  private constructor(libraryData: Library) {
     this.addMovieBtn = document.getElementById(
       "js-add-movie-btn"
     ) as HTMLButtonElement;
@@ -156,16 +167,22 @@ class DisplayController {
     this.setupAddMovieBtn();
     this.setupModalAddBtn();
     this.setupModalCancelBtn();
+  }
 
-    console.log(this.addMovieModalAddBtn, this.addMovieModalCancelBtn);
-    console.log(this.libraryReference);
+  static getInstance(library) {
+    if (DisplayController.instance) {
+      return this.instance;
+    }
+
+    this.instance = new DisplayController(library);
+    return this.instance;
   }
 }
 
 class App {
   static init() {
-    const library = new Library();
-    const renderer = new DisplayController(library);
+    const library = Library.getInstance();
+    const renderer = DisplayController.getInstance(library);
     library.addFilm(
       library.createFilm(
         "Lord of the Rings: The Fellowship of the Ring",
@@ -173,8 +190,6 @@ class App {
         "Peter Jackson"
       )
     );
-
-    console.log(library.list[0].title);
   }
 }
 
