@@ -13,29 +13,20 @@
     <header>
       <button class="btn" id="js-add-movie-btn">Add Movie</button>
     </header>
+    <section></section>
     <main>
-      <!-- <div class="library__card">
-        <div class="library__card__information-container">
-          <div>
-            <p>Title:</p>
-            <span></span>
-          </div>
-          <div>
-            <p>Director:</p>
-            <span></span>
-          </div>
-          <div>
-            <p>Release Year:</p>
-            <span></span>
-          </div>
-        </div>
-        <div class="card__button-container">
-          <button class="btn">Remove</button>
-          <button class="btn">Watched</button>
-        </div> -->
-      </div>
       <div class="add-movie-modal add-movie-modal--hidden">
         <form class="add-movie-modal__form">
+          <div class="add-movie-modal__form__element form__element-watched">
+            <label class="form__element__label" for="Watched">Watched</label>
+            <input
+              class="form__element__input"
+              type="checkbox"
+              id="watched"
+              name="watched"
+              required
+            />
+          </div>
           <div class="add-movie-modal__form__element">
             <label class="form__element__label" for="Title">Title</label>
             <input

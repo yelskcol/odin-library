@@ -2,7 +2,8 @@ class Film {
   constructor(
     public title: string,
     public releaseDate: string,
-    public director: string
+    public director: string,
+    public watched: string
   ) {}
 
   printInfo() {
@@ -49,8 +50,9 @@ class Library {
     this.list = [] as Film[];
   }
 
-  createFilm(title: string, year: string, director: string) {
-    const film = new Film(title, year, director);
+  createFilm(title: string, year: string, director: string, watched: string) {
+    const film = new Film(title, year, director, watched);
+    console.log(this.list);
     return film;
   }
 
@@ -84,7 +86,7 @@ class DisplayController {
   private libraryReference: Library;
 
   private constructor(libraryData: Library) {
-    this.main = Component.getElement("main") as HTMLElement;
+    this.main = Component.getElement("section") as HTMLElement;
     this.addMovieBtn = Component.getElement(
       "#js-add-movie-btn"
     ) as HTMLButtonElement;
@@ -112,7 +114,6 @@ class DisplayController {
   }
 
   setupModalAddBtn() {
-    // console.log(this);
     this.addMovieModalAddBtn.addEventListener("click", () => {
       console.log(this);
       this.addMovieHandler();
@@ -148,9 +149,10 @@ class DisplayController {
     const inputs = [...rawInputs] as HTMLInputElement[];
 
     const obj = {
-      title: inputs[0].value,
-      director: inputs[1].value,
-      year: inputs[2].value,
+      watched: inputs[0].value,
+      title: inputs[1].value,
+      director: inputs[2].value,
+      year: inputs[3].value,
     };
 
     return obj;
@@ -170,7 +172,13 @@ class DisplayController {
   addMovieData() {
     const template = this.getInputValues();
     const { title, director, year } = template;
-    const film = this.libraryReference.createFilm(title, year, director);
+    const watched = template.watched ? "Watched" : "Unwatched";
+    const film = this.libraryReference.createFilm(
+      title,
+      year,
+      director,
+      watched
+    );
     this.libraryReference.addFilm(film);
   }
 
@@ -183,7 +191,7 @@ class DisplayController {
   }
 
   constructCardHtml(film: Film) {
-    const { title, releaseDate, director } = film;
+    const { title, releaseDate, director, watched } = film;
     const content = `<div class="library__card__information-container">
     <div>
       <p>Title:</p>
@@ -200,7 +208,7 @@ class DisplayController {
   </div>
   <div class="card__button-container">
     <button class="btn">Remove</button>
-    <button class="btn">Watched</button>
+    <button class="btn">${watched}</button>
   </div>`;
 
     return content;
@@ -218,6 +226,7 @@ class DisplayController {
   }
 
   render() {
+    this.main.innerHTML = "";
     const list = this.libraryReference.returnCurrentList();
     list.forEach((film) => {
       this.main.appendChild(this.generateCard(film));

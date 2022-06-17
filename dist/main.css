@@ -55,6 +55,19 @@ main {
   gap: 1rem;
 }
 
+section {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+section div + div {
+  margin-top: 1rem;
+}
+
 /* Add Movie Modal */
 
 .add-movie-modal {
@@ -103,6 +116,20 @@ main {
 
 .form__element__input {
   flex: 2;
+}
+
+.form__element-watched {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.form__element-watched > label {
+  flex: none;
+}
+
+.form__element-watched > input {
+  flex: none;
 }
 
 /* Add Movie Modal End */
