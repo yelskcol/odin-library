@@ -49,7 +49,10 @@ header {
 
 main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* Add Movie Modal */
@@ -62,6 +65,7 @@ main {
   padding: 1rem;
   gap: 1rem;
   z-index: 100;
+  width: 33%;
 }
 
 .add-movie-modal--hidden {
@@ -89,10 +93,37 @@ main {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding: 0.3rem;
 }
 
-.add-movie-modal__form__element > label {
+.form__element__label {
   margin-right: 0.5rem;
+  flex: 1;
+}
+
+.form__element__input {
+  flex: 2;
 }
 
 /* Add Movie Modal End */
+
+/* Card */
+
+.library__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 40%;
+  padding: 1rem;
+  border: 1px solid black;
+  box-shadow: 2px 4px black;
+}
+
+.library__card__information-container div + div {
+  margin-top: 0.5rem;
+}
+
+.card__button-container {
+  display: flex;
+  justify-content: space-between;
+}

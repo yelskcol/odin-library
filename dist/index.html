@@ -14,19 +14,57 @@
       <button class="btn" id="js-add-movie-btn">Add Movie</button>
     </header>
     <main>
+      <!-- <div class="library__card">
+        <div class="library__card__information-container">
+          <div>
+            <p>Title:</p>
+            <span></span>
+          </div>
+          <div>
+            <p>Director:</p>
+            <span></span>
+          </div>
+          <div>
+            <p>Release Year:</p>
+            <span></span>
+          </div>
+        </div>
+        <div class="card__button-container">
+          <button class="btn">Remove</button>
+          <button class="btn">Watched</button>
+        </div> -->
+      </div>
       <div class="add-movie-modal add-movie-modal--hidden">
         <form class="add-movie-modal__form">
           <div class="add-movie-modal__form__element">
-            <label for="Title">Title</label>
-            <input type="text" id="title" name="title" required />
+            <label class="form__element__label" for="Title">Title</label>
+            <input
+              class="form__element__input"
+              type="text"
+              id="title"
+              name="title"
+              required
+            />
           </div>
           <div class="add-movie-modal__form__element">
-            <label for="Director">Director</label>
-            <input type="text" id="director" name="director" required />
+            <label class="form__element__label" for="Director">Director</label>
+            <input
+              class="form__element__input"
+              type="text"
+              id="director"
+              name="director"
+              required
+            />
           </div>
           <div class="add-movie-modal__form__element">
-            <label for="Year">Year</label>
-            <input type="text" id="year" name="year" required />
+            <label class="form__element__label" for="Year">Year</label>
+            <input
+              class="form__element__input"
+              type="text"
+              id="year"
+              name="year"
+              required
+            />
           </div>
         </form>
         <div class="add-movie-modal__buttons">

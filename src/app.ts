@@ -1,35 +1,8 @@
-class Library {
-  private list;
-  private static instance;
-  private constructor() {
-    this.list = [];
-  }
-
-  createFilm(title: string, year: string, director: string) {
-    const film = new Film(title, year, director);
-    return film;
-  }
-
-  addFilm(film: Film) {
-    this.list.push(film);
-    console.log(this.list);
-  }
-
-  static getInstance() {
-    if (Library.instance()) {
-      return this.instance;
-    }
-
-    this.instance = new Library();
-    return this.instance;
-  }
-}
-
 class Film {
   constructor(
-    private title: string,
-    private releaseDate: string,
-    private director: string
+    public title: string,
+    public releaseDate: string,
+    public director: string
   ) {}
 
   printInfo() {
@@ -41,7 +14,8 @@ class Component {
   static createElement(
     elementType: string,
     elementId: string = "",
-    classList: string[] = [""]
+    classList: string[] = [""],
+    htmlContent: string
   ) {
     const element = document.createElement(elementType);
 
@@ -55,12 +29,53 @@ class Component {
       });
     }
 
+    if (htmlContent) {
+      element.innerHTML = htmlContent;
+    }
+
     return element;
+  }
+
+  static getElement(targetElement: string) {
+    const element = document.querySelector(targetElement);
+    return element;
+  }
+}
+
+class Library {
+  private list: Film[];
+  private static instance;
+  private constructor() {
+    this.list = [] as Film[];
+  }
+
+  createFilm(title: string, year: string, director: string) {
+    const film = new Film(title, year, director);
+    return film;
+  }
+
+  addFilm(film: Film) {
+    this.list.push(film);
+    console.log(this.list);
+  }
+
+  returnCurrentList() {
+    return this.list;
+  }
+
+  static getInstance() {
+    if (Library.instance) {
+      return this.instance;
+    }
+
+    this.instance = new Library();
+    return this.instance;
   }
 }
 
 class DisplayController {
   private static instance;
+  private main: HTMLElement;
   private addMovieBtn: HTMLButtonElement;
   private backdrop: HTMLElement;
   private addMovieModal: HTMLElement;
@@ -69,18 +84,19 @@ class DisplayController {
   private libraryReference: Library;
 
   private constructor(libraryData: Library) {
-    this.addMovieBtn = document.getElementById(
-      "js-add-movie-btn"
+    this.main = Component.getElement("main") as HTMLElement;
+    this.addMovieBtn = Component.getElement(
+      "#js-add-movie-btn"
     ) as HTMLButtonElement;
-    this.backdrop = document.querySelector(".backdrop") as HTMLElement;
-    this.addMovieModal = document.querySelector(
+    this.backdrop = Component.getElement(".backdrop") as HTMLElement;
+    this.addMovieModal = Component.getElement(
       ".add-movie-modal"
     ) as HTMLElement;
-    this.addMovieModalAddBtn = document.getElementById(
-      "add-movie-modal__add-btn"
+    this.addMovieModalAddBtn = Component.getElement(
+      "#add-movie-modal__add-btn"
     ) as HTMLButtonElement;
-    this.addMovieModalCancelBtn = document.getElementById(
-      "add-movie-modal__cancel-btn"
+    this.addMovieModalCancelBtn = Component.getElement(
+      "#add-movie-modal__cancel-btn"
     ) as HTMLButtonElement;
 
     this.libraryReference = libraryData;
@@ -96,7 +112,9 @@ class DisplayController {
   }
 
   setupModalAddBtn() {
+    // console.log(this);
     this.addMovieModalAddBtn.addEventListener("click", () => {
+      console.log(this);
       this.addMovieHandler();
     });
   }
@@ -161,12 +179,56 @@ class DisplayController {
     this.toggleBackdrop();
     this.addMovieData();
     this.clearModalInputs();
+    this.render();
+  }
+
+  constructCardHtml(film: Film) {
+    const { title, releaseDate, director } = film;
+    const content = `<div class="library__card__information-container">
+    <div>
+      <p>Title:</p>
+      <span>${title}</span>
+    </div>
+    <div>
+      <p>Director:</p>
+      <span>${director}</span>
+    </div>
+    <div>
+      <p>Release Year:</p>
+      <span>${releaseDate}</span>
+    </div>
+  </div>
+  <div class="card__button-container">
+    <button class="btn">Remove</button>
+    <button class="btn">Watched</button>
+  </div>`;
+
+    return content;
+  }
+
+  generateCard(film: Film) {
+    const card = Component.createElement(
+      "div",
+      "",
+      ["library__card"],
+      this.constructCardHtml(film)
+    );
+
+    return card;
+  }
+
+  render() {
+    const list = this.libraryReference.returnCurrentList();
+    list.forEach((film) => {
+      this.main.appendChild(this.generateCard(film));
+    });
   }
 
   init() {
     this.setupAddMovieBtn();
     this.setupModalAddBtn();
     this.setupModalCancelBtn();
+    this.render();
   }
 
   static getInstance(library) {
@@ -183,13 +245,9 @@ class App {
   static init() {
     const library = Library.getInstance();
     const renderer = DisplayController.getInstance(library);
-    library.addFilm(
-      library.createFilm(
-        "Lord of the Rings: The Fellowship of the Ring",
-        "2001",
-        "Peter Jackson"
-      )
-    );
+
+    console.log("App is running...");
+    console.log(renderer);
   }
 }
 
